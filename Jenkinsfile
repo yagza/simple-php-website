@@ -12,41 +12,42 @@ pipeline {
                 '''
             }
         }
-
-
-    stage('Build image') {         
-        app = docker.build("yagza/simple-php-site")    
-    }
-        
-    stage('Push image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {            
-            app.push("${env.BUILD_NUMBER}")            
-            app.push("latest")        
-        }    
-    }
-
-    stage('Test image') {           
-        app.inside {                         
-            sh 'echo "Tests passed"'        
-        }    
-    } 
-    
-    stage('deploy') {
-    
-        agent {
-            node {
-                label 'vm'
+        stage('build') {
+            agent {
+                node {
+                    label 'vm'
+                    }
+            }
+            steps {
+                echo "Building.."
+                sh '''
+                docker build . -t yagza/simple-php-site:latest
+                '''
             }
         }
-    
-        steps {
-            echo 'Deploying....'
-            sh '''
-            echo "updating php-simple container..."
-            docker run -d --name php-simple -p 8080:8080 yagza/simple-php-site:latest
-            '''
-            echo 'you may try to connect via http://10.0.0.130:8080'
+       
+        stage('image_push') {
+            steps {
+                echo "pushing.."
+                sh '''
+                docker image ls
+                '''
+            }
+        }
+        stage('deploy') {
+            agent {
+                node {
+                    label 'vm'
+                    }
+            }
+            steps {
+                echo 'Deploying....'
+                sh '''
+                echo "updating php-simple container..."
+                docker run -d --name php-simple -p 8080:8080 yagza/simple-php-site:latest
+                '''
+                echo 'you may try to connect via http://10.0.0.130:8080'
+            }
         }
     }
-}
 }
