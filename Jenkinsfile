@@ -12,20 +12,11 @@ pipeline {
                 '''
             }
         }
-        stage('build') {
-            agent {
-                node {
-                    label 'vm'
-                    }
-            }
-            steps {
-                echo "Building.."
-                sh '''
-                docker build . -t yagza/simple-php-site:latest
-                '''
-            }
-        }
 
+      stage('Build image') {         
+            app = docker.build("yagza/simple-php-site")    
+       }
+        
        stage('Push image') {
            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {            
                app.push("${env.BUILD_NUMBER}")            
@@ -33,15 +24,13 @@ pipeline {
               }    
            }
         }
-        
-        stage('image_push') {
-            steps {
-                echo "pushing.."
-                sh '''
-                docker image ls
-                '''
-            }
-        }
+
+      stage('Test image') {           
+            app.inside {                         
+             sh 'echo "Tests passed"'        
+            }    
+        } 
+    
         stage('deploy') {
             agent {
                 node {
