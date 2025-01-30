@@ -34,6 +34,11 @@ pipeline {
             }
         }
         stage('deploy') {
+            agent {
+                node {
+                    label 'vm'
+                    }
+            }
             steps {
                 echo 'Deploying....'
                 sh '''
