@@ -12,7 +12,7 @@ pipeline {
                 '''
             }
         }
-    }
+
 
     stage('Build image') {         
         app = docker.build("yagza/simple-php-site")    
@@ -48,4 +48,5 @@ pipeline {
             echo 'you may try to connect via http://10.0.0.130:8080'
         }
     }
+}
 }
