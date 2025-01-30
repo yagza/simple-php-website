@@ -1,9 +1,5 @@
 pipeline {
-    agent { 
-        node {
-            label 'vm'
-            }
-      }
+    agent any
     triggers {
         pollSCM 'H/5 * * * *'
     }
@@ -17,6 +13,11 @@ pipeline {
             }
         }
         stage('build') {
+            agent {
+                node {
+                    label 'vm'
+                    }
+            }
             steps {
                 echo "Building.."
                 sh '''
@@ -36,8 +37,10 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sh '''
-                echo "doing deploy stuff.."
+                echo "updating php-simple container..."
+                docker run -d --name php-simple -p 8080:8080 yagza/simple-php-site:latest
                 '''
+                echo 'you may try to connect via http://10.0.0.130:8080'
             }
         }
     }
