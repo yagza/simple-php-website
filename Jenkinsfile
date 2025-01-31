@@ -13,7 +13,7 @@ node {
     }
 
     stage('Build image') {
-        MyApp = docker.build("yagza/simple-php-site-new:${env.BUILD_NUMBER}")
+        MyApp = docker.build("yagza/simple-php-site:${env.BUILD_NUMBER}")
     }
     
     stage('Test image') {
