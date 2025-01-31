@@ -1,9 +1,9 @@
+triggers {
+    pollSCM 'H/5 * * * *'
+}
+
 node {
 
-    triggers {
-        pollSCM 'H/5 * * * *'
-    }
-    
     def MyApp
 
     stage('Clone repository') {
