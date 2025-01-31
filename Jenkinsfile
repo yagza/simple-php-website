@@ -1,5 +1,14 @@
 node {
+
+    triggers {
+        pollSCM 'H/5 * * * *'
+    }
+    
     def MyApp
+
+    stage('Clone repository') {
+        checkout scm
+    }
 
     stage('Build image') {
         MyApp = docker.build("yagza/simple-php-site-new:${env.BUILD_NUMBER}")
