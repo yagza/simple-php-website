@@ -1,5 +1,10 @@
 node {
     def MyApp
+    
+    stage('Clone repository') {
+        checkout scm
+    }
+
     stage('Build image') {
         MyApp = docker.build("yagza/simple-php-site-new:${env.BUILD_NUMBER}")
     }
@@ -7,7 +12,9 @@ node {
     stage('Test image') {
         MyApp.inside {
             sh 'echo "Requesting the first page"...'
-            sh 'curl https://ya.ru'
+            sh 'curl https://ya.ru -v'
+            sh 'ls -la'
+            sh 'pwd'
         }
     }
     
