@@ -19,7 +19,7 @@ node {
     stage('Test image') {
         MyApp.inside {
             sh 'echo "Requesting the first page"...'
-            sh 'curl https://ya.ru -v'
+            sh 'curl localhost:8080 -v'
             sh 'ls -la'
             sh 'pwd'
         }
