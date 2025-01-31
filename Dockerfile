@@ -1,4 +1,5 @@
 FROM php:8.4-fpm-alpine3.20
+RUN apk update && apk add --upgrade curl
 COPY content /usr/src/myapp/content
 COPY includes /usr/src/myapp/includes
 COPY template /usr/src/myapp/template 
