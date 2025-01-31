@@ -7,7 +7,7 @@ node {
     stage('Test image') {
         MyApp.inside {
             sh 'echo "Requesting the first page"...'
-            sh 'curl localhost:8080'
+            sh 'curl https://ya.ru'
         }
     }
     
