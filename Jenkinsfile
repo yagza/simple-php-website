@@ -1,8 +1,10 @@
-triggers {
-    pollSCM 'H/5 * * * *'
-}
-
 node {
+
+    properties([
+        pipelineTriggers([
+            pollSCM('H/5 * * * *')
+        ])
+    ])
 
     def MyApp
 
