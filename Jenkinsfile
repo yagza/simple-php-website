@@ -7,9 +7,9 @@ node {
     stage('Test image') {           
         MyApp.inside {            
             sh 'echo "Installing curl..."'
-            sh apk update && apk add curl
+            sh 'apk update && apk add curl'
             sh 'echo "Requesting the first page"...'
-            sh curl localhost:8080
+            sh 'curl localhost:8080'
         }    
     }
     
