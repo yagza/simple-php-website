@@ -24,12 +24,8 @@ node {
                 label 'vm'
                 }
         }
-        steps {
-            echo 'Removing php-simple container...'
-            sh '''
-            docker rm php-simple -f || true
-            '''
-        }
+        echo 'Removing php-simple container...'
+        sh 'docker rm php-simple -f || true'
     }
 
     stage('Run Image') {
