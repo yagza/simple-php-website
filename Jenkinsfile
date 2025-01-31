@@ -18,8 +18,23 @@ node {
         }
     }
 
+    stage('Clear previous deploy') {
+        agent {
+            node {
+                label 'vm'
+                }
+        }
+        steps {
+            echo 'Removing php-simple container...'
+            sh '''
+            docker rm php-simple -f || true
+            '''
+        }
+    }
+
     stage('Run Image') {
         MyApp.run('--name php-simple -p 8080:8080')
+        echo 'you may try to connect via http://10.0.0.146:8080'
     }
 
 }
