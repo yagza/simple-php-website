@@ -5,5 +5,5 @@ COPY includes /usr/src/myapp/includes
 COPY template /usr/src/myapp/template 
 COPY .htaccess phpinfo.php index.php /usr/src/myapp/
 WORKDIR /usr/src/myapp
-EXPOSE 80
-CMD [ "php", "-S", "0.0.0.0:80" ]
+EXPOSE 8080
+CMD [ "php", "-S", "0.0.0.0:8080" ]
